@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-# from django.contrib.auth.models import PermissionMixin # maybe this is removed from the module..? Throws an error.
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import PermissionsMixin # maybe this is removed from the module..? Throws an error.
 from django.contrib.auth.models import BaseUserManager
 
 
@@ -38,9 +37,7 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
-
-class UserProfile(AbstractBaseUser):
-# class UserProfile(AbstractBaseUser, User):
+class UserProfile(AbstractBaseUser, PermissionsMixin):
     """
     Databse model for users in the system
     To add a new column to the database:
