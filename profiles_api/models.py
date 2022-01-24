@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin # maybe this is removed from the module..? Throws an error.
-# from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager
 
 
@@ -20,6 +19,7 @@ class UserProfileManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email, name=name)
+        # user = User.objects.create_user(name=name, email=email)
         user.set_password(password)
         user.save(using=self._db) # standard procedure to save the users
 
@@ -38,7 +38,6 @@ class UserProfileManager(BaseUserManager):
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
-
     """
     Databse model for users in the system
     To add a new column to the database:
@@ -51,7 +50,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_superuser = False
+
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'
